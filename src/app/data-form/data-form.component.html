@@ -1,0 +1,149 @@
+<form #form="ngForm" (ngSubmit)="logForm()">
+    <div class="container">
+        <div class="mainData">
+            <div class="sideTilteParent">
+                <div class="sideTilte">שלב 1 פרטים כללים</div>
+            </div>
+            <div class="data">
+                <div class="innerContainer">
+                    <div class="inputs">
+                        <div class="form-group">
+                            <label for="Mortgage">סכום משכנתא</label>
+                            <input class="form-control" type="number" name="MortgageSum" id="Mortgage"
+                                   [(ngModel)]="mortgageData.mortgageSum"
+                                   #MortgageSum="ngModel" required pattern="^[0-9]*$">
+                            <div class="messageError"
+                                 *ngIf="MortgageSum.invalid && (MortgageSum.dirty || MortgageSum.touched)">
+                                <div *ngIf="MortgageSum?.errors.required">
+                                    יש להזין סכום משכנתא.
+                                </div>
+                                <div *ngIf="MortgageSum?.errors.pattern">
+                                    סכום המשכנתא חייב לכלול מספרים בלבד.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Prop">שווי נכס</label>
+                            <input class="form-control" type="number" name="PropValue"
+                                   [(ngModel)]="mortgageData.propValue"
+                                   #PropValue="ngModel" id="Prop" required pattern="^[0-9]*$">
+                            <div class="messageError"
+                                 *ngIf="PropValue.invalid && (PropValue.dirty || PropValue.touched)">
+                                <div *ngIf="PropValue?.errors.required">
+                                    יש להזין שווי נכס.
+                                </div>
+                                <div *ngIf="PropValue?.errors.pattern">
+                                    שווי נכס חייב לכלול מספרים בלבד.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Net">הכנסה נטו</label>
+                            <input class="form-control" type="number" name="NetIncome"
+                                   [(ngModel)]="mortgageData.netIncome"
+                                   #NetIncome="ngModel" id="Net" required pattern="^[0-9]*$">
+                            <div class="messageError"
+                                 *ngIf="NetIncome.invalid && (NetIncome.dirty || NetIncome.touched)">
+                                <div *ngIf="NetIncome?.errors.required">
+                                    יש להזין הכנסה נטו.
+                                </div>
+                                <div *ngIf="NetIncome?.errors.pattern">
+                                    הכנסה נטו חייבת לכלול מספרים בלבד.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button type="button" class="btnContinue btn btn-success btn-sm"
+                                [disabled]="(MortgageSum.invalid || PropValue.invalid || NetIncome.invalid)"
+                                (click)="btnAddNewPlan()">המשך
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mainDataPlans" *ngFor="let mortgagePlan of mortgageData.plans; let i=index">
+            <div class="sideTilteParentPlans">
+                <div *ngIf="i===0" class="sideTilte">שלב 2 הרכב משכנתא</div>
+            </div>
+            <div class="dataPlans">
+                <div class="innerContainer">
+                    <div class="inputs">
+                        <div class="form-group">
+                            <label >בחר מסלול</label>
+                            <select class="form-control" name="mortgagePlan_{{i}}" [(ngModel)]="mortgagePlan.plan"
+                                    #Plan="ngModel"
+                                    required>
+                                <option *ngFor="let plan of MPlans" [value]="plan">{{plan}}</option>
+                            </select>
+                            <div class="messageError"
+                                 *ngIf="Plan.invalid && (Plan.dirty || Plan.touched)">
+                                יש צורך להזין מסלול.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>סכום מסלול</label>
+                            <input class="form-control" type="number" name="planSum_{{i}}"
+                                   [(ngModel)]="mortgagePlan.sum"
+                                   #MPlanSum="ngModel" required pattern="^[0-9]*$">
+                            <div class="messageError"
+                                 *ngIf="MPlanSum.invalid && (MPlanSum.dirty || MPlanSum.touched)">
+                                <div *ngIf="MPlanSum?.errors.required">
+                                    יש להזין סכום מסלול.
+                                </div>
+                                <div *ngIf="MPlanSum?.errors.pattern">
+                                    סכום מסלול לכלול מספרים בלבד.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>תקופה בשנים</label>
+                            <select class="form-control" name="mortgagePeriod_{{i}}" [(ngModel)]="mortgagePlan.period"
+                                    #MPeriod="ngModel" required>
+                                <option *ngFor="let p of Period" [value]="p">{{p}}</option>
+                            </select>
+                            <div class="messageError"
+                                 *ngIf="MPeriod.invalid && (MPeriod.dirty || MPeriod.touched)">
+                                יש צורך להזין תקופה בשנים.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>ריבית שהתקבלה עבור המסלול הזה</label>
+                            <input class="form-control" type="number" name="interest_{{i}}" min="0" max="100"
+                                   [(ngModel)]="mortgagePlan.interest" #MInterest="ngModel" required pattern="^[0-9]*$">
+                            <div class="messageError"
+                                 *ngIf="MInterest.invalid && (MInterest.dirty || MInterest.touched)">
+                                <div *ngIf="MInterest?.errors.required">
+                                    יש צורך להזין ריבית.
+                                </div>
+                                <div *ngIf="MInterest?.errors.pattern">
+                                    ריבית צריכה לכלול מספרים בלבד.
+                                </div>
+                                <div *ngIf="MInterest.value < minInterest">
+                                    ריבית צריכה להיות גדולה מ - 0.
+                                </div>
+                                <div *ngIf="MInterest.value > maxInterest">
+                                    ריבית צריכה להיות קטנה מ - 100.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button type="button" class=" btnContinue btn btn-success btn-sm"
+                                [disabled]="(Plan.invalid || MPlanSum.invalid || MPeriod.invalid || MInterest.invalid)"
+                                (click)="btnAddNewPlan()">הוסף
+                            מסלול נוסף +
+                        </button>
+                        <button type="button" class="btnAddPlan btnContinue btn btn-success btn-sm" (click)="btnRemovePlan(mortgagePlan)">הסר מסלול</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btnSub">
+        <button class="btn btn-warning" [disabled]="form.invalid || mortgageData.plans.length === 0"
+                type="submit">איך המשכנתא
+            שלי
+        </button>
+    </div>
+</form>

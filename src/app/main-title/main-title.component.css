@@ -1,0 +1,23 @@
+.title{
+    height: 250px;
+    display: flex;
+    flex-direction: row;
+}
+
+.titleText{
+    width: 50%;
+    margin-right: 100px;
+    margin-top: 30px;
+}
+.titlePic{
+    width: 50%;
+    background: url('../../assets/mortgage.png') no-repeat center center;
+    height: 100%;
+}
+.pTitle{
+    font-weight: bold;
+}
+
+h2 {
+    color: blue;
+}
