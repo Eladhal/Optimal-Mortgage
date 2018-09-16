@@ -9,6 +9,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { BottomComponent } from './bottom/bottom.component';
 import { MainTitleComponent } from './main-title/main-title.component';
 import { DataFormComponent } from './data-form/data-form.component';
+import { PercentageValidatorDirective } from './Directives/percentage-validator.directive';
+import { SelectInputDirective } from './Directives/select-input.directive';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { DataFormComponent } from './data-form/data-form.component';
     NavbarComponent,
     BottomComponent,
     MainTitleComponent,
-    DataFormComponent
+    DataFormComponent,
+    PercentageValidatorDirective,
+    SelectInputDirective
   ],
   imports: [
     BrowserModule, FormsModule,HttpClientModule

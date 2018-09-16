@@ -10,7 +10,7 @@
                         <div class="form-group">
                             <label for="Mortgage">סכום משכנתא</label>
                             <input class="form-control" type="number" name="MortgageSum" id="Mortgage"
-                                   [(ngModel)]="mortgageData.mortgageSum"
+                                   [(ngModel)]="mortgageData.mortgageSum "
                                    #MortgageSum="ngModel" required pattern="^[0-9]*$">
                             <div class="messageError"
                                  *ngIf="MortgageSum.invalid && (MortgageSum.dirty || MortgageSum.touched)">
@@ -41,16 +41,16 @@
                             <label for="Net">הכנסה נטו</label>
                             <input class="form-control" type="number" name="NetIncome"
                                    [(ngModel)]="mortgageData.netIncome"
-                                   #NetIncome="ngModel" id="Net" required pattern="^[0-9]*$">
-                            <div class="messageError"
-                                 *ngIf="NetIncome.invalid && (NetIncome.dirty || NetIncome.touched)">
-                                <div *ngIf="NetIncome?.errors.required">
-                                    יש להזין הכנסה נטו.
-                                </div>
-                                <div *ngIf="NetIncome?.errors.pattern">
-                                    הכנסה נטו חייבת לכלול מספרים בלבד.
-                                </div>
-                            </div>
+                                   #NetIncome="ngModel" id="Net"> <!--required pattern="^[0-9]*$"-->
+                            <!--<div class="messageError"-->
+                                 <!--*ngIf="NetIncome.invalid && (NetIncome.dirty || NetIncome.touched)">-->
+                                <!--<div *ngIf="NetIncome?.errors.required">-->
+                                    <!--יש להזין הכנסה נטו.-->
+                                <!--</div>-->
+                                <!--<div *ngIf="NetIncome?.errors.pattern">-->
+                                    <!--הכנסה נטו חייבת לכלול מספרים בלבד.-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                     </div>
                     <div class="buttons">
@@ -72,7 +72,7 @@
                         <div class="form-group">
                             <label >בחר מסלול</label>
                             <select class="form-control" name="mortgagePlan_{{i}}" [(ngModel)]="mortgagePlan.plan"
-                                    #Plan="ngModel"
+                                    #Plan="ngModel" appSelectInput [selectFlag]="i === mortgageData.plans.length-1"
                                     required>
                                 <option *ngFor="let plan of MPlans" [value]="plan">{{plan}}</option>
                             </select>
@@ -110,7 +110,7 @@
                         <div class="form-group">
                             <label>ריבית שהתקבלה עבור המסלול הזה</label>
                             <input class="form-control" type="number" name="interest_{{i}}" min="0" max="100"
-                                   [(ngModel)]="mortgagePlan.interest" #MInterest="ngModel" required pattern="^[0-9]*$">
+                                   [(ngModel)]="mortgagePlan.interest" #MInterest="ngModel" appPercentageValidator required pattern="^[+-]?([0-9]*[.])?[0-9]+$">
                             <div class="messageError"
                                  *ngIf="MInterest.invalid && (MInterest.dirty || MInterest.touched)">
                                 <div *ngIf="MInterest?.errors.required">
@@ -119,11 +119,8 @@
                                 <div *ngIf="MInterest?.errors.pattern">
                                     ריבית צריכה לכלול מספרים בלבד.
                                 </div>
-                                <div *ngIf="MInterest.value < minInterest">
-                                    ריבית צריכה להיות גדולה מ - 0.
-                                </div>
-                                <div *ngIf="MInterest.value > maxInterest">
-                                    ריבית צריכה להיות קטנה מ - 100.
+                                <div *ngIf="MInterest?.errors.cus_percentage">
+                                    יש להזין מספר בין 0 ל - 100
                                 </div>
                             </div>
                         </div>

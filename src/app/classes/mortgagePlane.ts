@@ -3,13 +3,6 @@ export class MortgageData {
     propValue: number;
     netIncome: number;
     plans: MortgagePlan[] = [];
-
-    // constructor(mortgageSum: number = 0, propValue: number = 0, netIncome: number = 0, plans: MortgagePlan[] = []) {
-    //     this.mortgageSum = mortgageSum;
-    //     this.propValue = mortgageSum;
-    //     this.netIncome = mortgageSum;
-    //     this.plans = plans;
-    // }
 }
 
 

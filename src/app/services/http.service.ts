@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {MortgageData} from '../mortgagePlane';
+import {MortgageData} from '../classes/mortgagePlane';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -12,7 +12,6 @@ export class HttpService {
     }
 
     addMortgage(data: MortgageData) {
-        console.log(data);
-        this.http.post<MortgageData>('aaa', data).subscribe();
+        this.http.post<MortgageData>('api/mortgage-plan', data).subscribe();
     }
 }

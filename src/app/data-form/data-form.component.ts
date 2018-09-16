@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {MortgageData} from '../mortgagePlane';
-import {MortgagePlan} from '../mortgagePlane';
-import {Plans} from '../mortgagePlane';
-import {Period} from '../mortgagePlane';
+import {MortgageData} from '../classes/mortgagePlane';
+import {MortgagePlan} from '../classes/mortgagePlane';
+import {Plans} from '../classes/mortgagePlane';
+import {Period} from '../classes/mortgagePlane';
 import {HttpService} from '../services/http.service';
 
 
@@ -15,8 +15,6 @@ export class DataFormComponent implements OnInit {
     MPlans: string[] = Plans;
     Period: string[] = Period;
     mortgageData: MortgageData;
-    minInterest: Number = 0;
-    maxInterest: Number = 100;
 
     constructor(private http: HttpService) {
         this.mortgageData = new MortgageData();
