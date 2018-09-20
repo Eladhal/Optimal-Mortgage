@@ -19,16 +19,22 @@ export class SumValidatorDirective implements Validator {
     }
 
     validate(control: AbstractControl) {
-        const elementValue = +control.value;
-        if (elementValue != null) {
+        if (control.value !== null) {
+            const str = control.value.replace(/,/g, '');
+            const elementValue = +str;
             let sum = 0;
+
             for (let i = 0; i < this.indx; i++) {
                 sum = sum + this.mPlans[i].sum;
             }
+
             sum = sum + elementValue;
+            console.log(sum);
+            console.log(this.mSum);
             if (sum > this.mSum) {
                 return {'cus_sum': 'sum of plans is bigger than mortgage sum'};
             }
+
         }
 
     }
