@@ -13,7 +13,7 @@ export class PercentageValidatorDirective implements Validator {
     validate(control: AbstractControl) {
         const elementValue = control.value;
         if (elementValue < 0 || elementValue > 100) {
-            return {'cus_percentage': 'Ned to enter numbers between 0 to 100'};
+            return {'cus_percentage': 'Need to enter numbers between 0 to 100'};
         }
     }
 

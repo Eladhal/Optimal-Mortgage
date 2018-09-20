@@ -24,7 +24,13 @@ export class DataFormComponent implements OnInit {
     }
 
     logForm() {
-        this.http.addMortgage(this.mortgageData);
+        console.log(this.mortgageData);
+        //this.http.addMortgage(this.mortgageData);
+    }
+
+    ConvertToNum(num: string): number {
+        const str = num.replace(/,/g, '');
+        return parseInt(str, 10);
     }
 
     btnAddNewPlan() {

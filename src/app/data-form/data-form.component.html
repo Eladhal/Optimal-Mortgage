@@ -9,48 +9,48 @@
                     <div class="inputs">
                         <div class="form-group">
                             <label for="Mortgage">סכום משכנתא</label>
-                            <input class="form-control" type="number" name="MortgageSum" id="Mortgage"
-                                   [(ngModel)]="mortgageData.mortgageSum "
-                                   #MortgageSum="ngModel" required pattern="^[0-9]*$">
+                            <input class="form-control" type="text" name="MortgageSum" id="Mortgage" ngModel
+                                   [value]="mortgageData.mortgageSum | addCommas"
+                                   (input)="mortgageData.mortgageSum=ConvertToNum($event.target.value)"
+                                   #MortgageSum="ngModel" appNumberValidator required>
                             <div class="messageError"
                                  *ngIf="MortgageSum.invalid && (MortgageSum.dirty || MortgageSum.touched)">
                                 <div *ngIf="MortgageSum?.errors.required">
                                     יש להזין סכום משכנתא.
                                 </div>
-                                <div *ngIf="MortgageSum?.errors.pattern">
-                                    סכום המשכנתא חייב לכלול מספרים בלבד.
+                                <div *ngIf="MortgageSum?.errors.cus_num">
+                                    יש להזין מספרים בלבד.
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="Prop">שווי נכס</label>
-                            <input class="form-control" type="number" name="PropValue"
-                                   [(ngModel)]="mortgageData.propValue"
-                                   #PropValue="ngModel" id="Prop" required pattern="^[0-9]*$">
+                            <input class="form-control" type="text" name="PropValue" ngModel
+                                   [value]="mortgageData.propValue | addCommas"
+                                   (input)="mortgageData.propValue=ConvertToNum($event.target.value)"
+                                   #PropValue="ngModel" id="Prop" appNumberValidator required>
                             <div class="messageError"
                                  *ngIf="PropValue.invalid && (PropValue.dirty || PropValue.touched)">
                                 <div *ngIf="PropValue?.errors.required">
                                     יש להזין שווי נכס.
                                 </div>
-                                <div *ngIf="PropValue?.errors.pattern">
-                                    שווי נכס חייב לכלול מספרים בלבד.
+                                <div *ngIf="PropValue?.errors.cus_num">
+                                    יש להזין מספרים בלבד.
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="Net">הכנסה נטו</label>
-                            <input class="form-control" type="number" name="NetIncome"
-                                   [(ngModel)]="mortgageData.netIncome"
-                                   #NetIncome="ngModel" id="Net"> <!--required pattern="^[0-9]*$"-->
-                            <!--<div class="messageError"-->
-                                 <!--*ngIf="NetIncome.invalid && (NetIncome.dirty || NetIncome.touched)">-->
-                                <!--<div *ngIf="NetIncome?.errors.required">-->
-                                    <!--יש להזין הכנסה נטו.-->
-                                <!--</div>-->
-                                <!--<div *ngIf="NetIncome?.errors.pattern">-->
-                                    <!--הכנסה נטו חייבת לכלול מספרים בלבד.-->
-                                <!--</div>-->
-                            <!--</div>-->
+                            <input class="form-control" type="text" name="NetIncome" ngModel
+                                   [value]="mortgageData.netIncome | addCommas"
+                                   (input)="mortgageData.netIncome=ConvertToNum($event.target.value)"
+                                   #NetIncome="ngModel" id="Net" appNumberValidator>
+                            <div class="messageError"
+                                 *ngIf="NetIncome.invalid && (NetIncome.dirty || NetIncome.touched)">
+                                <div *ngIf="NetIncome?.errors.cus_num">
+                                    יש להזין מספרים בלבד.
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="buttons">
@@ -70,7 +70,7 @@
                 <div class="innerContainer">
                     <div class="inputs">
                         <div class="form-group">
-                            <label >בחר מסלול</label>
+                            <label>בחר מסלול</label>
                             <select class="form-control" name="mortgagePlan_{{i}}" [(ngModel)]="mortgagePlan.plan"
                                     #Plan="ngModel" appSelectInput [selectFlag]="i === mortgageData.plans.length-1"
                                     required>
@@ -83,16 +83,21 @@
                         </div>
                         <div class="form-group">
                             <label>סכום מסלול</label>
-                            <input class="form-control" type="number" name="planSum_{{i}}"
-                                   [(ngModel)]="mortgagePlan.sum"
-                                   #MPlanSum="ngModel" required pattern="^[0-9]*$">
+                            <input class="form-control" type="text" name="planSum_{{i}}" ngModel
+                                   [value]="mortgagePlan.sum | addCommas"
+                                   (input)="mortgagePlan.sum=ConvertToNum($event.target.value)"
+                                   appSumValidator [indx]="i" [mPlans]="mortgageData.plans" [mSum]="mortgageData.mortgageSum"
+                                   #MPlanSum="ngModel" appNumberValidator required >
                             <div class="messageError"
                                  *ngIf="MPlanSum.invalid && (MPlanSum.dirty || MPlanSum.touched)">
                                 <div *ngIf="MPlanSum?.errors.required">
                                     יש להזין סכום מסלול.
                                 </div>
-                                <div *ngIf="MPlanSum?.errors.pattern">
-                                    סכום מסלול לכלול מספרים בלבד.
+                                <div *ngIf="MPlanSum?.errors.cus_num">
+                                    יש להזין מספרים בלבד.
+                                </div>
+                                <div *ngIf="MPlanSum?.errors.cus_sum">
+                                   הסכום הכולל של המסלולים גדול יותר מסכום המשכנתא.
                                 </div>
                             </div>
                         </div>
@@ -110,7 +115,9 @@
                         <div class="form-group">
                             <label>ריבית שהתקבלה עבור המסלול הזה</label>
                             <input class="form-control" type="number" name="interest_{{i}}" min="0" max="100"
-                                   [(ngModel)]="mortgagePlan.interest" #MInterest="ngModel" appPercentageValidator required pattern="^[+-]?([0-9]*[.])?[0-9]+$">
+                                   [(ngModel)]="mortgagePlan.interest" #MInterest="ngModel" appPercentageValidator
+                                   required
+                                   pattern="^[+-]?([0-9]*[.])?[0-9]+$">
                             <div class="messageError"
                                  *ngIf="MInterest.invalid && (MInterest.dirty || MInterest.touched)">
                                 <div *ngIf="MInterest?.errors.required">
@@ -131,7 +138,9 @@
                                 (click)="btnAddNewPlan()">הוסף
                             מסלול נוסף +
                         </button>
-                        <button type="button" class="btnAddPlan btnContinue btn btn-success btn-sm" (click)="btnRemovePlan(mortgagePlan)">הסר מסלול</button>
+                        <button type="button" class="btnAddPlan btnContinue btn btn-success btn-sm"
+                                (click)="btnRemovePlan(mortgagePlan)">הסר מסלול
+                        </button>
                     </div>
                 </div>
             </div>
