@@ -1,0 +1,14 @@
+<div class="mainDataPlans" >
+  <div class="sideTilteParentPlans">
+    <div>מסקנות והמלצות</div>
+  </div>
+  <div class="dataPlans">
+    <div class="innerContainer">
+      <ul>
+        <li *ngFor="let result of data">
+          <p>{{result.plan}} : </p> <p>{{result.result}}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

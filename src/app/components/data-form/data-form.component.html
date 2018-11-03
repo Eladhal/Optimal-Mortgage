@@ -2,7 +2,7 @@
     <div class="container">
         <div class="mainData">
             <div class="sideTilteParent">
-                <div class="sideTilte">שלב 1 פרטים כללים</div>
+                <div>שלב 1 פרטים כללים</div>
             </div>
             <div class="data">
                 <div class="innerContainer">
@@ -28,6 +28,7 @@
                             <input class="form-control" type="text" name="PropValue" ngModel
                                    [value]="mortgageData.propValue | addCommas"
                                    (input)="mortgageData.propValue=ConvertToNum($event.target.value)"
+                                   appPropertyValidator [mortgValue]="mortgageData.mortgageSum"
                                    #PropValue="ngModel" id="Prop" appNumberValidator required>
                             <div class="messageError"
                                  *ngIf="PropValue.invalid && (PropValue.dirty || PropValue.touched)">
@@ -36,6 +37,9 @@
                                 </div>
                                 <div *ngIf="PropValue?.errors.cus_num">
                                     יש להזין מספרים בלבד.
+                                </div>
+                                <div *ngIf="PropValue?.errors.cus_value">
+                                    ערך הנכס לא יכול להיות נמוך יותר מערך המשכנתא.
                                 </div>
                             </div>
                         </div>
@@ -86,8 +90,9 @@
                             <input class="form-control" type="text" name="planSum_{{i}}" ngModel
                                    [value]="mortgagePlan.sum | addCommas"
                                    (input)="mortgagePlan.sum=ConvertToNum($event.target.value)"
-                                   appSumValidator [indx]="i" [mPlans]="mortgageData.plans" [mSum]="mortgageData.mortgageSum"
-                                   #MPlanSum="ngModel" appNumberValidator required >
+                                   appSumValidator [indx]="i" [mPlans]="mortgageData.plans"
+                                   [mSum]="mortgageData.mortgageSum"
+                                   #MPlanSum="ngModel" appNumberValidator required>
                             <div class="messageError"
                                  *ngIf="MPlanSum.invalid && (MPlanSum.dirty || MPlanSum.touched)">
                                 <div *ngIf="MPlanSum?.errors.required">
@@ -97,7 +102,7 @@
                                     יש להזין מספרים בלבד.
                                 </div>
                                 <div *ngIf="MPlanSum?.errors.cus_sum">
-                                   הסכום הכולל של המסלולים גדול יותר מסכום המשכנתא.
+                                    הסכום הכולל של המסלולים גדול יותר מסכום המשכנתא.
                                 </div>
                             </div>
                         </div>
@@ -145,11 +150,24 @@
                 </div>
             </div>
         </div>
+        <div class="mainDataPlans"  *ngIf="averageInterest">
+            <div class="sideTilteParentPlans">
+              <div>מסקנות והמלצות</div>
+            </div>
+            <div class="dataPlans">
+              <div class="innerContainer">
+                <ul>
+                  <li *ngFor="let result of averageInterest">
+                    <p>{{result?.plan}} : </p> <p>{{result?.result}}</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        <!-- <app-results [data]="averageInterest" *ngIf="averageInterest"></app-results> -->
     </div>
-    <div class="btnSub">
-        <button class="btn btn-warning" [disabled]="form.invalid || mortgageData.plans.length === 0"
-                type="submit">איך המשכנתא
-            שלי
-        </button>
+    <div class="btnSub" *ngIf="form.valid && mortgageData.plans.length >0 && !averageInterest">
+        <button class="btn btn-warning" type="submit">איך המשכנתא שלי</button>
     </div>
 </form>

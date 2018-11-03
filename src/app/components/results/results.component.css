@@ -1,0 +1,115 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+
+.mainData {
+    display: flex;
+    flex-direction: row;
+    margin-right: auto;
+    margin-left: auto;}
+
+.mainDataPlans {
+    display: flex;
+    flex-direction: row;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.data {
+    width: 450px;
+    box-shadow: 2px 2px 20px hsl(0, 0%, 85%);
+    margin-right: 10px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+
+.dataPlans{
+    width: 450px;
+    box-shadow: 2px 2px 20px hsl(0, 0%, 85%);
+    margin-right: 10px;
+    margin-top: 15px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+
+.sideTilteParent {
+    background-color: lightblue;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-align: center;
+    width: 40px;
+    box-shadow: 1px 1.5px 5px hsl(0, 0%, 85%);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.sideTilteParentPlans {
+    background-color: lightblue;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-align: center;
+    width: 40px;
+    box-shadow: 1px 1.5px 6px hsl(0, 0%, 85%);
+    margin: 0px;
+}
+
+.innerContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+label, input {
+    display: block;
+}
+
+.btnAddPlan {
+    float: left;
+    margin-top: 20px;
+    width: 120px;
+    margin-left: 2%;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+select {
+    margin-bottom: 10px;
+}
+
+.messageError {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: red;
+}
+
+.buttons {
+    align-self: end;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.btnContinue {
+    float: left;
+    margin-top: 20px;
+    width: 120px;
+}
+
+.btnSub {
+    margin-top: 15px;
+    text-align: center;
+}
+
+
+
+

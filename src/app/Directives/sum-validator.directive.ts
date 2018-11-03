@@ -1,6 +1,5 @@
 import {Directive, Input} from '@angular/core';
 import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
-import {NumberValidatorDirective} from './number-validator.directive';
 import {MortgagePlan} from '../classes/mortgagePlane';
 
 
@@ -29,14 +28,9 @@ export class SumValidatorDirective implements Validator {
             }
 
             sum = sum + elementValue;
-            console.log(sum);
-            console.log(this.mSum);
             if (sum > this.mSum) {
                 return {'cus_sum': 'sum of plans is bigger than mortgage sum'};
             }
-
         }
-
     }
-
 }

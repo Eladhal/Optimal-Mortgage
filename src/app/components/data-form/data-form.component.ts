@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MortgageData} from '../classes/mortgagePlane';
-import {MortgagePlan} from '../classes/mortgagePlane';
-import {Plans} from '../classes/mortgagePlane';
-import {Period} from '../classes/mortgagePlane';
-import {HttpService} from '../services/http.service';
+import {MortgageData} from '../../classes/mortgagePlane';
+import {MortgagePlan} from '../../classes/mortgagePlane';
+import {Plans} from '../../classes/mortgagePlane';
+import {Period} from '../../classes/mortgagePlane';
+import {HttpService} from '../../services/http.service';
 
 
 @Component({
@@ -15,6 +15,7 @@ export class DataFormComponent implements OnInit {
     MPlans: string[] = Plans;
     Period: string[] = Period;
     mortgageData: MortgageData;
+    averageInterest: any;
 
     constructor(private http: HttpService) {
         this.mortgageData = new MortgageData();
@@ -24,8 +25,10 @@ export class DataFormComponent implements OnInit {
     }
 
     logForm() {
-        console.log(this.mortgageData);
-        //this.http.addMortgage(this.mortgageData);
+        this.http.addMortgage(this.mortgageData).subscribe((answer) => {
+            console.log(answer);
+            this.averageInterest = answer;
+        });
     }
 
     ConvertToNum(num: string): number {
